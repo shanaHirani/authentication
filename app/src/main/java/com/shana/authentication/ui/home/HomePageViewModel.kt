@@ -1,6 +1,9 @@
 package com.shana.authentication.ui.home
 
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class HomePageViewModel: ViewModel() {
+@HiltViewModel
+class HomePageViewModel @Inject constructor(): ViewModel() {
 }
