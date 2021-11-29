@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import com.shana.authentication.R
 import com.shana.authentication.databinding.FragmentHomePageBinding
 import dagger.hilt.android.AndroidEntryPoint
 

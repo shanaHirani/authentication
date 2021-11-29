@@ -12,6 +12,8 @@ buildscript {
         version_work = "1.0.1"
         version_gradle = "4.1.3"
         version_hilt = "2.38.1"
+        version_preferences = "1.0.0"
+        version_glide = "4.11.0"
     }
     repositories {
         google()
