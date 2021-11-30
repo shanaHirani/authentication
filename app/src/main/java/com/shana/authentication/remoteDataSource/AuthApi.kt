@@ -1,16 +1,16 @@
 package com.shana.authentication.remoteDataSource
 
+import com.shana.authentication.remoteDataSource.remoteData.LoginRequestInfo
 import com.shana.authentication.remoteDataSource.remoteData.LoginResponse
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface AuthApi {
-
-    @FormUrlEncoded
+    @Headers(
+        "Accept: application/json",
+        "Content-type:application/json"
+    )
     @POST("Authentication/Login")
     suspend fun logIn(
-        @Field("Username")userName:String,
-        @Field("Password")passWord:String
+        @Body LoginRequestInfo: LoginRequestInfo
     ):LoginResponse
 }

@@ -1,4 +1,4 @@
-package com.shana.authentication.repository
+package com.shana.authentication.base
 
 import com.shana.authentication.remoteDataSource.Resource
 import kotlinx.coroutines.Dispatchers

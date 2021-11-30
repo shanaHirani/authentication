@@ -121,4 +121,7 @@ dependencies {
 
     //share preferences
     implementation "androidx.datastore:datastore-preferences:$version_preferences"
+
+    //interceptor
+    implementation "com.squareup.okhttp3:logging-interceptor:4.9.0"
 }

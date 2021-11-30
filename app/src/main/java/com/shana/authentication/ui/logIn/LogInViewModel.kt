@@ -4,15 +4,19 @@ import android.content.Context
 import android.widget.Toast
 import androidx.databinding.Bindable
 import androidx.databinding.Observable
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.shana.authentication.base.BaseViewModel
+import com.shana.authentication.remoteDataSource.Resource
+import com.shana.authentication.remoteDataSource.remoteData.LoginResponse
+import com.shana.authentication.repository.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LogInViewModel @Inject constructor(@ApplicationContext private val context: Context): BaseViewModel() {
+class LogInViewModel @Inject constructor(private val authRepository: AuthRepository): BaseViewModel() {
 
     @Bindable
     val userName = MutableLiveData<String>()
@@ -20,15 +24,15 @@ class LogInViewModel @Inject constructor(@ApplicationContext private val context
     @Bindable
     val passWord = MutableLiveData<String>()
 
-    fun logIn(){
-        Toast.makeText(context,"user: "+userName.value+" password: "+passWord.value, Toast.LENGTH_LONG).show()
+    private val _logInResponse : MutableLiveData<Resource<LoginResponse>> = MutableLiveData()
+    val logInResponse : LiveData<Resource<LoginResponse>>
+        get() = _logInResponse
+
+    fun logIn() = viewModelScope.launch{
+        _logInResponse.value = authRepository.login(userName.value!!,passWord.value!!)
     }
 
-    override fun addOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {
 
-    }
-
-    override fun removeOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {
-
-    }
+    override fun addOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {}
+    override fun removeOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {}
 }
