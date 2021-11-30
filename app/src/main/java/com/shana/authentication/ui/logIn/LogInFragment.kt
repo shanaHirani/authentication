@@ -9,7 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.shana.authentication.databinding.FragmentLogInBinding
 import dagger.hilt.android.AndroidEntryPoint
-import com.shana.authentication.remoteDataSource.Resource
+import com.shana.authentication.data.remoteDataSource.Resource
 
 @AndroidEntryPoint
 class LogInFragment : Fragment() {

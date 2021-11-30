@@ -1,4 +1,4 @@
-package com.shana.authentication.remoteDataSource.remoteData
+package com.shana.authentication.data.remoteDataSource.remoteData
 
 data class LoginResponse(
     val exception: String,

@@ -1,6 +1,6 @@
 package com.shana.authentication.base
 
-import com.shana.authentication.remoteDataSource.Resource
+import com.shana.authentication.data.remoteDataSource.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException

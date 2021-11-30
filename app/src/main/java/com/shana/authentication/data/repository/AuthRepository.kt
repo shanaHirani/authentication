@@ -1,10 +1,8 @@
-package com.shana.authentication.repository
+package com.shana.authentication.data.repository
 
 import com.shana.authentication.base.BaseRepository
-import com.shana.authentication.remoteDataSource.AuthApi
-import com.shana.authentication.remoteDataSource.Resource
-import com.shana.authentication.remoteDataSource.remoteData.LoginRequestInfo
-import com.shana.authentication.remoteDataSource.remoteData.LoginResponse
+import com.shana.authentication.data.remoteDataSource.AuthApi
+import com.shana.authentication.data.remoteDataSource.remoteData.LoginRequestInfo
 import javax.inject.Inject
 
 class AuthRepository @Inject constructor(

@@ -1,4 +1,4 @@
-package com.shana.authentication.remoteDataSource
+package com.shana.authentication.data.remoteDataSource
 
 import okhttp3.ResponseBody
 

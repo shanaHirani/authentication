@@ -1,16 +1,14 @@
 package com.shana.authentication.ui.logIn
 
-import android.content.Context
-import android.widget.Toast
 import androidx.databinding.Bindable
 import androidx.databinding.Observable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.shana.authentication.base.BaseViewModel
-import com.shana.authentication.remoteDataSource.Resource
-import com.shana.authentication.remoteDataSource.remoteData.LoginResponse
-import com.shana.authentication.repository.AuthRepository
+import com.shana.authentication.data.remoteDataSource.Resource
+import com.shana.authentication.data.remoteDataSource.remoteData.LoginResponse
+import com.shana.authentication.data.repository.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

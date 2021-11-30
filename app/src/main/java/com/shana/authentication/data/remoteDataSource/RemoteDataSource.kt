@@ -1,7 +1,6 @@
-package com.shana.authentication.remoteDataSource
+package com.shana.authentication.data.remoteDataSource
 
 
-import com.google.android.datatransport.runtime.logging.Logging
 import com.shana.authentication.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

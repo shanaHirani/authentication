@@ -1,7 +1,7 @@
-package com.shana.authentication.remoteDataSource
+package com.shana.authentication.data.remoteDataSource
 
-import com.shana.authentication.remoteDataSource.remoteData.LoginRequestInfo
-import com.shana.authentication.remoteDataSource.remoteData.LoginResponse
+import com.shana.authentication.data.remoteDataSource.remoteData.LoginRequestInfo
+import com.shana.authentication.data.remoteDataSource.remoteData.LoginResponse
 import retrofit2.http.*
 
 interface AuthApi {

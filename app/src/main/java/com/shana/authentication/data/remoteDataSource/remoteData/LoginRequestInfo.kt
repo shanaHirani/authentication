@@ -1,4 +1,4 @@
-package com.shana.authentication.remoteDataSource.remoteData
+package com.shana.authentication.data.remoteDataSource.remoteData
 
 import com.google.gson.annotations.SerializedName
 
