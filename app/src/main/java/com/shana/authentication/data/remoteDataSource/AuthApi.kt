@@ -4,6 +4,7 @@ import com.shana.authentication.data.remoteDataSource.remoteData.LoginRequestInf
 import com.shana.authentication.data.remoteDataSource.remoteData.LoginResponse
 import retrofit2.http.*
 
+
 interface AuthApi {
     @Headers(
         "Accept: application/json",
