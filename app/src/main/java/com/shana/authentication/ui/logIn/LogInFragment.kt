@@ -7,15 +7,22 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.shana.authentication.data.UserPreferences
 import com.shana.authentication.databinding.FragmentLogInBinding
 import dagger.hilt.android.AndroidEntryPoint
 import com.shana.authentication.data.remoteDataSource.Resource
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class LogInFragment : Fragment() {
 
     private val viewModel: LogInViewModel by viewModels()
-
+    @Inject
+    lateinit var userPreferences: UserPreferences
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,12 +32,24 @@ class LogInFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-        viewModel.logInResponse.observe(viewLifecycleOwner,{
-            when(it){
-                is Resource.Success ->{
-                    Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_LONG).show()
+        val navController = this.findNavController()
+
+        userPreferences.accessToken.asLiveData().observe(viewLifecycleOwner,{
+            Toast.makeText(requireContext(), it?:"token is null", Toast.LENGTH_SHORT).show()
+        })
+
+        viewModel.logInResponse.observe(viewLifecycleOwner, {
+            when (it) {
+                is Resource.Success -> {
+                    lifecycleScope.launch {
+                        userPreferences.saveAccessTokens(it.value.token, it.value.token)
+                        navController.navigate(
+                            LogInFragmentDirections.actionLogInFragmentToHomePageFragment()
+                        )
+
+                    }
                 }
-                is Resource.Failure ->{
+                is Resource.Failure -> {
                     Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_LONG).show()
                 }
             }
