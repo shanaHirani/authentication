@@ -10,6 +10,8 @@ import com.shana.authentication.base.BaseViewModel
 import com.shana.authentication.data.remoteDataSource.Resource
 import com.shana.authentication.data.remoteDataSource.remoteData.LoginResponse
 import com.shana.authentication.data.repository.AuthRepository
+import com.shana.authentication.isPassWordValid
+import com.shana.authentication.isUserNameValid
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -28,9 +30,12 @@ class LogInViewModel @Inject constructor(private val authRepository: AuthReposit
     val isProgressBarVisible: LiveData<Boolean>
         get() = _isProgressBarVisible
 
-    private val _isDataValid = MutableLiveData<Boolean>()
-    val isDataValid: LiveData<Boolean>
-        get() = _isDataValid
+    val isDataValid = Transformations.map(userName) { username1 ->
+        Transformations.map(passWord) { passWord1 ->
+            isPassWordValid(passWord1) && isUserNameValid(username1)
+        }
+
+    }
 
 
     private val _logInResponse: MutableLiveData<Resource<LoginResponse>> = MutableLiveData()
@@ -39,7 +44,7 @@ class LogInViewModel @Inject constructor(private val authRepository: AuthReposit
 
     init {
         _isProgressBarVisible.value = false
-        _isDataValid.value = true
+
 
     }
 
@@ -47,6 +52,10 @@ class LogInViewModel @Inject constructor(private val authRepository: AuthReposit
         _isProgressBarVisible.value = true
         _logInResponse.value = authRepository.login(userName.value!!, passWord.value!!)
         _isProgressBarVisible.value = false
+    }
+
+    fun saveAuthToken(token:String)= viewModelScope.launch{
+        authRepository.saveAuthToken(token)
     }
 
     override fun addOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {}

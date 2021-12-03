@@ -21,6 +21,7 @@ import javax.inject.Inject
 class LogInFragment : Fragment() {
 
     private val viewModel: LogInViewModel by viewModels()
+
     @Inject
     lateinit var userPreferences: UserPreferences
 
@@ -34,20 +35,20 @@ class LogInFragment : Fragment() {
 
         val navController = this.findNavController()
 
-        userPreferences.accessToken.asLiveData().observe(viewLifecycleOwner,{
-            Toast.makeText(requireContext(), it?:"token is null", Toast.LENGTH_SHORT).show()
+        userPreferences.accessToken.asLiveData().observe(viewLifecycleOwner, {
+            if (it != null)
+                this.findNavController().navigate(
+                    LogInFragmentDirections.actionLogInFragmentToHomePageFragment()
+                )
         })
 
         viewModel.logInResponse.observe(viewLifecycleOwner, {
             when (it) {
                 is Resource.Success -> {
-                    lifecycleScope.launch {
-                        userPreferences.saveAccessTokens(it.value.token, it.value.token)
-                        navController.navigate(
-                            LogInFragmentDirections.actionLogInFragmentToHomePageFragment()
-                        )
-
-                    }
+                    viewModel.saveAuthToken(it.value.token)
+                    navController.navigate(
+                        LogInFragmentDirections.actionLogInFragmentToHomePageFragment()
+                    )
                 }
                 is Resource.Failure -> {
                     Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_LONG).show()
