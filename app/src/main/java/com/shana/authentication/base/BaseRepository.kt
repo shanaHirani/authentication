@@ -24,4 +24,5 @@ abstract class BaseRepository {
             }
         }
     }
+
 }

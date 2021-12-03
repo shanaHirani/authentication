@@ -22,25 +22,25 @@ class LogInFragment : Fragment() {
 
     private val viewModel: LogInViewModel by viewModels()
 
-    @Inject
-    lateinit var userPreferences: UserPreferences
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        viewModel.accessToken.observe(viewLifecycleOwner, {
+            if (it != null)
+                this.findNavController().navigate(
+                    LogInFragmentDirections.actionLogInFragmentToHomePageFragment()
+                )
+        })
+
         val binding = FragmentLogInBinding.inflate(inflater)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
         val navController = this.findNavController()
 
-        userPreferences.accessToken.asLiveData().observe(viewLifecycleOwner, {
-            if (it != null)
-                this.findNavController().navigate(
-                    LogInFragmentDirections.actionLogInFragmentToHomePageFragment()
-                )
-        })
+
 
         viewModel.logInResponse.observe(viewLifecycleOwner, {
             when (it) {

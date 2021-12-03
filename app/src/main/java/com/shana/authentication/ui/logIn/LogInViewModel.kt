@@ -42,10 +42,10 @@ class LogInViewModel @Inject constructor(private val authRepository: AuthReposit
     val logInResponse: LiveData<Resource<LoginResponse>>
         get() = _logInResponse
 
+    val accessToken = authRepository.accessToken
+
     init {
         _isProgressBarVisible.value = false
-
-
     }
 
     fun logIn() = viewModelScope.launch {

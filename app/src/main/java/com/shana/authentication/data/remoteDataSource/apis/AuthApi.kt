@@ -1,4 +1,4 @@
-package com.shana.authentication.data.remoteDataSource
+package com.shana.authentication.data.remoteDataSource.apis
 
 import com.shana.authentication.data.remoteDataSource.remoteData.LoginRequestInfo
 import com.shana.authentication.data.remoteDataSource.remoteData.LoginResponse
