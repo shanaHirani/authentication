@@ -26,6 +26,7 @@ class HomePageFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
+
         viewModel.professors.observe(viewLifecycleOwner, {
             when (it) {
                 is Resource.Success -> {

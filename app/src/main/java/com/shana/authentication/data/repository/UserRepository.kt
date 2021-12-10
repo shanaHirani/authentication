@@ -12,7 +12,6 @@ class UserRepository @Inject constructor(
     private val api: UserApi,
 ) : BaseRepository() {
 
-
     suspend fun getProfessor() = safeApiCall {
         api.getProfessorList().asDomain()
     }

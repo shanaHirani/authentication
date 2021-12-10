@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
+import com.shana.authentication.Event
 import com.shana.authentication.base.BaseViewModel
 import com.shana.authentication.data.remoteDataSource.Resource
 import com.shana.authentication.data.remoteDataSource.remoteData.LoginResponse
@@ -26,10 +27,6 @@ class LogInViewModel @Inject constructor(private val authRepository: AuthReposit
     @Bindable
     val passWord = MutableLiveData<String>()
 
-    private val _isProgressBarVisible = MutableLiveData<Boolean>()
-    val isProgressBarVisible: LiveData<Boolean>
-        get() = _isProgressBarVisible
-
     val isDataValid = Transformations.map(userName) { username1 ->
         Transformations.map(passWord) { passWord1 ->
             isPassWordValid(passWord1) && isUserNameValid(username1)
@@ -38,23 +35,39 @@ class LogInViewModel @Inject constructor(private val authRepository: AuthReposit
     }
 
 
-    private val _logInResponse: MutableLiveData<Resource<LoginResponse>> = MutableLiveData()
+    private val _logInResponse: MutableLiveData<Resource<LoginResponse>> = MutableLiveData(Resource.Start)
     val logInResponse: LiveData<Resource<LoginResponse>>
         get() = _logInResponse
 
+
+    private val _navigateToHomeFragment: MutableLiveData<Event<Boolean>> = MutableLiveData()
+    val navigateToHomeFragment: LiveData<Event<Boolean>>
+        get() = _navigateToHomeFragment
+
+    private val _apiError: MutableLiveData<Event<Resource.Failure>> = MutableLiveData()
+    val apiError: MutableLiveData<Event<Resource.Failure>>
+        get() = _apiError
+
     val accessToken = authRepository.accessToken
 
-    init {
-        _isProgressBarVisible.value = false
-    }
 
     fun logIn() = viewModelScope.launch {
-        _isProgressBarVisible.value = true
+        _logInResponse.value = Resource.Loading
         _logInResponse.value = authRepository.login(userName.value!!, passWord.value!!)
-        _isProgressBarVisible.value = false
+        when (val result = _logInResponse.value) {
+            is Resource.Success -> {
+                saveAuthToken(result.value.token)
+                _navigateToHomeFragment.value = Event(true)
+            }
+            is Resource.Failure -> {
+                _apiError.value = Event(result)
+            }
+            else -> {}
+        }
+
     }
 
-    fun saveAuthToken(token:String)= viewModelScope.launch{
+    fun saveAuthToken(token: String) = viewModelScope.launch {
         authRepository.saveAuthToken(token)
     }
 

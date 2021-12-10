@@ -32,7 +32,7 @@ class AppModule {
         userPreferences: UserPreferences,
         remoteDataSource: RemoteDataSource
     ): UserApi {
-        //take care geting toke is Asyncroncis
+        //take care getting token is Asynchronous
         val token= runBlocking {userPreferences.refreshToken.first()}
         return remoteDataSource.buildApi(UserApi::class.java, token)
     }

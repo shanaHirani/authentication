@@ -17,7 +17,7 @@ import javax.inject.Inject
 class HomePageViewModel @Inject constructor(private val userRepository: UserRepository) :
     BaseViewModel() {
 
-    private val _professors = MutableLiveData<Resource<List<Professor>>>()
+    private val _professors = MutableLiveData<Resource<List<Professor>>>(Resource.Start)
     val professors: LiveData<Resource<List<Professor>>>
         get() = _professors
 

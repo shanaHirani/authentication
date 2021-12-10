@@ -7,15 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.shana.authentication.data.UserPreferences
+import com.shana.authentication.EventObserver
 import com.shana.authentication.databinding.FragmentLogInBinding
 import dagger.hilt.android.AndroidEntryPoint
 import com.shana.authentication.data.remoteDataSource.Resource
-import kotlinx.coroutines.launch
-import javax.inject.Inject
+import com.shana.authentication.handleApiError
 
 @AndroidEntryPoint
 class LogInFragment : Fragment() {
@@ -27,33 +24,25 @@ class LogInFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        viewModel.accessToken.observe(viewLifecycleOwner, {
-            if (it != null)
-                this.findNavController().navigate(
-                    LogInFragmentDirections.actionLogInFragmentToHomePageFragment()
-                )
-        })
+//        viewModel.accessToken.observe(viewLifecycleOwner, {
+//            if (it != null)
+//                this.findNavController().navigate(
+//                    LogInFragmentDirections.actionLogInFragmentToHomePageFragment()
+//                )
+//        })
 
         val binding = FragmentLogInBinding.inflate(inflater)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-        val navController = this.findNavController()
+        viewModel.navigateToHomeFragment.observe(viewLifecycleOwner, EventObserver {
+            this.findNavController().navigate(
+                LogInFragmentDirections.actionLogInFragmentToHomePageFragment()
+            )
+        })
 
-
-
-        viewModel.logInResponse.observe(viewLifecycleOwner, {
-            when (it) {
-                is Resource.Success -> {
-                    viewModel.saveAuthToken(it.value.token)
-                    navController.navigate(
-                        LogInFragmentDirections.actionLogInFragmentToHomePageFragment()
-                    )
-                }
-                is Resource.Failure -> {
-                    Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_LONG).show()
-                }
-            }
+        viewModel.apiError.observe(viewLifecycleOwner,EventObserver{
+            handleApiError(it){viewModel.logIn()}
         })
 
         return binding.root
