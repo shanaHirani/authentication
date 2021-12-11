@@ -24,12 +24,12 @@ class LogInFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-//        viewModel.accessToken.observe(viewLifecycleOwner, {
-//            if (it != null)
-//                this.findNavController().navigate(
-//                    LogInFragmentDirections.actionLogInFragmentToHomePageFragment()
-//                )
-//        })
+        viewModel.accessToken.observe(viewLifecycleOwner, {
+            if (it != null)
+                this.findNavController().navigate(
+                    LogInFragmentDirections.actionLogInFragmentToHomePageFragment()
+                )
+        })
 
         val binding = FragmentLogInBinding.inflate(inflater)
         binding.lifecycleOwner = this
@@ -42,7 +42,7 @@ class LogInFragment : Fragment() {
         })
 
         viewModel.apiError.observe(viewLifecycleOwner,EventObserver{
-            handleApiError(it){viewModel.logIn()}
+            handleApiError(it,viewModel){viewModel.logIn()}
         })
 
         return binding.root

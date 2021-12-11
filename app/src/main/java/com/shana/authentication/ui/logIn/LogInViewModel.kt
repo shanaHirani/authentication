@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LogInViewModel @Inject constructor(private val authRepository: AuthRepository) :
-    BaseViewModel() {
+    BaseViewModel(authRepository) {
 
     @Bindable
     val userName = MutableLiveData<String>()
@@ -58,6 +58,7 @@ class LogInViewModel @Inject constructor(private val authRepository: AuthReposit
             is Resource.Success -> {
                 saveAuthToken(result.value.token)
                 _navigateToHomeFragment.value = Event(true)
+                passWord.value = ""
             }
             is Resource.Failure -> {
                 _apiError.value = Event(result)

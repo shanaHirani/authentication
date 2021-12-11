@@ -12,7 +12,7 @@ import javax.inject.Singleton
 class AuthRepository @Inject constructor(
     private val api: AuthApi,
     private val userPreferences: UserPreferences
-    ): BaseRepository() {
+    ): BaseRepository(api,userPreferences) {
 
         val accessToken = userPreferences.accessToken.asLiveData()
 

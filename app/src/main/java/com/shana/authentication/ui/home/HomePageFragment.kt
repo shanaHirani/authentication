@@ -7,8 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.shana.authentication.EventObserver
 import com.shana.authentication.data.remoteDataSource.Resource
 import com.shana.authentication.databinding.FragmentHomePageBinding
+import com.shana.authentication.handleApiError
 import com.shana.authentication.ui.logIn.LogInFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -27,18 +30,15 @@ class HomePageFragment : Fragment() {
         binding.viewModel = viewModel
 
 
-        viewModel.professors.observe(viewLifecycleOwner, {
-            when (it) {
-                is Resource.Success -> {
-                    Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_LONG).show()
-                }
-                is Resource.Failure -> {
-                    Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_LONG).show()
-                }
-            }
-        }
-        )
+        viewModel.apiError.observe(viewLifecycleOwner, EventObserver{
+            handleApiError(it,viewModel){viewModel.getProfessorsInfo()}
+        })
 
+        viewModel.navigateToLogInFragment.observe(viewLifecycleOwner,{
+            this.findNavController().navigate(
+                HomePageFragmentDirections.actionHomePageFragmentToLogInFragment()
+            )
+        })
         return binding.root
     }
 

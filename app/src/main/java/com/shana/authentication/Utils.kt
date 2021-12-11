@@ -3,8 +3,10 @@ package com.shana.authentication
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
+import com.shana.authentication.base.BaseViewModel
 import com.shana.authentication.data.remoteDataSource.Resource
 import com.shana.authentication.ui.logIn.LogInFragment
+import com.shana.authentication.ui.logIn.LogInViewModel
 
 
 fun isUserNameValid(user: String?): Boolean {
@@ -33,6 +35,7 @@ fun View.snackbar(massage:String, action:(()->Unit)?=null){
 
 fun Fragment.handleApiError(
     failure: Resource.Failure,
+    viewModel: BaseViewModel,
     retry:(()->Unit)?=null
 ){
     when{
@@ -41,7 +44,7 @@ fun Fragment.handleApiError(
             if(this is LogInFragment){
                 requireView().snackbar("you have entered incorrect email or password")
             }else{
-                //@todo
+                viewModel.logOut()
             }
         }
         else ->{

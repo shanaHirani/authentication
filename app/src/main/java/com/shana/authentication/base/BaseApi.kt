@@ -1,4 +1,8 @@
 package com.shana.authentication.base
 
-class BaseApi {
+interface BaseApi {
+
+    suspend fun logOut(){
+    }
+
 }
