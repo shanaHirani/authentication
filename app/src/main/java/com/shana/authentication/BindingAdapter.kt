@@ -18,7 +18,7 @@ fun progressBarVisible(progressBar: ProgressBar, status: Resource<*>) {
 
 @BindingAdapter(value = ["editTextError", "errorMassage"],requireAll = false)
 fun EditText.editTextError(isValid: Boolean, errorMassage:String) {
-    if (!isValid && this.text.isNotBlank()) {
+    if (!isValid) {
         this.error = errorMassage
     } else {
         this.error = null

@@ -28,9 +28,13 @@ class LogInViewModel @Inject constructor(private val authRepository: AuthReposit
     val passWord = MutableLiveData<String>()
 
 
-    val isPassWordValid = Transformations.map(passWord) {isPassWordValid(it)}
-    val isUserNameValid = Transformations.map(userName) {isUserNameValid(it)}
+    val isPassWordValid:MutableLiveData<Boolean> = Transformations.map(passWord) {isPassWordValid(it)} as MutableLiveData<Boolean>
+    val isUserNameValid:MutableLiveData<Boolean> = Transformations.map(userName) {isUserNameValid(it)}as MutableLiveData<Boolean>
 
+    init {
+        isPassWordValid.value = true
+        isUserNameValid.value = true
+    }
 
     val isDataValid = Transformations.map(userName) { username1 ->
         Transformations.map(passWord) { passWord1 ->
