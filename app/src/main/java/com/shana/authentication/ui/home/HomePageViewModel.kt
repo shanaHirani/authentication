@@ -22,13 +22,13 @@ class HomePageViewModel @Inject constructor(private val userRepository: UserRepo
     val professors: LiveData<Resource<List<Professor>>>
         get() = _professors
 
-    private val _textString = MutableLiveData<String>()
-    val textString : LiveData<String>
-    get() = _textString
+    private val _professorListResultString = MutableLiveData<String>()
+    val professorListResultString : LiveData<String>
+    get() = _professorListResultString
 
-    private val _apiError: MutableLiveData<Event<Resource.Failure>> = MutableLiveData()
-    val apiError: MutableLiveData<Event<Resource.Failure>>
-        get() = _apiError
+    private val _getProfessorsApiError: MutableLiveData<Event<Resource.Failure>> = MutableLiveData()
+    val getProfessorsApiError: MutableLiveData<Event<Resource.Failure>>
+        get() = _getProfessorsApiError
 
 
     fun getProfessorsInfo() = viewModelScope.launch {
@@ -36,10 +36,10 @@ class HomePageViewModel @Inject constructor(private val userRepository: UserRepo
         _professors.value = userRepository.getProfessor()
         when (val result = _professors.value) {
             is Resource.Success -> {
-                _textString.value = result.value.toString()
+                _professorListResultString.value = result.value.toString()
             }
             is Resource.Failure -> {
-                _apiError.value = Event(result)
+                _getProfessorsApiError.value = Event(result)
             }
             else->{}
         }

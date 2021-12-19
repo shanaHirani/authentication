@@ -30,7 +30,7 @@ class HomePageFragment : Fragment() {
         binding.viewModel = viewModel
 
 
-        viewModel.apiError.observe(viewLifecycleOwner, EventObserver{
+        viewModel.getProfessorsApiError.observe(viewLifecycleOwner, EventObserver{
             handleApiError(it,viewModel){viewModel.getProfessorsInfo()}
         })
 

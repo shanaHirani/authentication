@@ -1,6 +1,6 @@
 package com.shana.authentication.di
 
-import android.content.Context
+
 import com.shana.authentication.data.UserPreferences
 import com.shana.authentication.data.remoteDataSource.apis.AuthApi
 import com.shana.authentication.data.remoteDataSource.RemoteDataSource
@@ -8,7 +8,6 @@ import com.shana.authentication.data.remoteDataSource.apis.UserApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
