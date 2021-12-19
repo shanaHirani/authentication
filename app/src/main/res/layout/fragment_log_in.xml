@@ -64,7 +64,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/password"
-            app:layout_constraintTop_toBottomOf="@+id/user_name_et" />
+            app:layout_constraintTop_toBottomOf="@+id/user_name_et"
+            app:errorMassage="@{@string/edit_text_password_error}"
+            app:editTextError="@{viewModel.isPassWordValid}"/>
 
         <EditText
             android:id="@+id/user_name_et"
@@ -78,7 +80,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/user"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:errorMassage="@{@string/edit_text_user_error}"
+            app:editTextError="@{viewModel.isUserNameValid}"/>
 
         <ProgressBar
             android:id="@+id/progressBar"

@@ -27,6 +27,11 @@ class LogInViewModel @Inject constructor(private val authRepository: AuthReposit
     @Bindable
     val passWord = MutableLiveData<String>()
 
+
+    val isPassWordValid = Transformations.map(passWord) {isPassWordValid(it)}
+    val isUserNameValid = Transformations.map(userName) {isUserNameValid(it)}
+
+
     val isDataValid = Transformations.map(userName) { username1 ->
         Transformations.map(passWord) { passWord1 ->
             isPassWordValid(passWord1) && isUserNameValid(username1)
@@ -34,8 +39,8 @@ class LogInViewModel @Inject constructor(private val authRepository: AuthReposit
 
     }
 
-
-    private val _logInResponse: MutableLiveData<Resource<LoginResponse>> = MutableLiveData(Resource.Start)
+    private val _logInResponse: MutableLiveData<Resource<LoginResponse>> =
+        MutableLiveData(Resource.Start)
     val logInResponse: LiveData<Resource<LoginResponse>>
         get() = _logInResponse
 
@@ -49,7 +54,6 @@ class LogInViewModel @Inject constructor(private val authRepository: AuthReposit
         get() = _apiError
 
     val accessToken = authRepository.accessToken
-
 
     fun logIn() = viewModelScope.launch {
         _logInResponse.value = Resource.Loading

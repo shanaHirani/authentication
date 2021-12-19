@@ -8,4 +8,6 @@
     <string name="password_tx">password:</string>
     <string name="user_tx">user:</string>
     <string name="log_out">Log out</string>
+    <string name="edit_text_user_error">user name is too short</string>
+    <string name="edit_text_password_error">passWord is too short</string>
 </resources>

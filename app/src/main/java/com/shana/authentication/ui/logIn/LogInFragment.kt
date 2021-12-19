@@ -31,6 +31,7 @@ class LogInFragment : Fragment() {
                 )
         })
 
+
         val binding = FragmentLogInBinding.inflate(inflater)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel

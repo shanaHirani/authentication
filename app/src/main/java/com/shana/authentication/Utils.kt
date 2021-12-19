@@ -18,7 +18,7 @@ fun isUserNameValid(user: String?): Boolean {
 
 fun isPassWordValid(password: String?): Boolean {
     if (password != null)
-        return password.length > 1
+        return password.length > 6
     else
         return false
 }
